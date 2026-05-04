@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday Vrinda! 🌸</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&family=Lora:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --cream: #faf6ee;
+      --parchment: #f0e8d0;
+      --sage: #8aab7e;
+      --dusty-rose: #d4908a;
+      --lavender: #b8a9c9;
+      --warm-brown: #7a5c40;
+      --ink: #3d2b1f;
+      --tape-yellow: #F0DC94;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--cream);
+      font-family: 'Lora', serif;
+      color: var(--ink);
+      overflow-x: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      padding: 20px 0;
+    }
+
+    .canvas {
+      position: relative;
+      width: 1440px;
+      height: 1120px;
+      background: var(--cream);
+      overflow: visible;
+    }
+
+    .bg-texture {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        radial-gradient(ellipse at 10% 20%, rgba(138,171,126,0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 85% 70%, rgba(212,144,138,0.1) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 50%, rgba(184,169,201,0.06) 0%, transparent 60%);
+      z-index: 1;
+    }
+
+    .corner-deco { position: absolute; font-size: 24px; opacity: 0.5; z-index: 2; pointer-events: none; }
+    .corner-deco.tl { top: 20px; left: 30px; }
+    .corner-deco.tr { top: 20px; right: 30px; }
+    .corner-deco.bl { bottom: 80px; left: 30px; }
+    .corner-deco.br { bottom: 80px; right: 30px; }
+
+    .header {
+      position: absolute;
+      top: 60px;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      z-index: 3;
+      width: 600px;
+    }
+    .subtitle { font-family: 'Caveat', cursive; font-size: 14px; color: var(--sage); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 5px; }
+    .title { font-family: 'Caveat', cursive; font-size: 50px; font-weight: 600; color: var(--warm-brown); line-height: 1.1; text-shadow: 1px 1px 0 rgba(255,255,255,0.6); margin-bottom: 5px; }
+    .title-sub { font-family: 'Lora', serif; font-style: italic; font-size: 16px; color: var(--dusty-rose); }
+
+    .polaroid-card {
+      position: absolute;
+      width: 250px;
+      background: white;
+      padding: 10px 10px 35px 10px;
+      border: 0.5px solid rgba(200, 185, 160, 0.5);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .polaroid-card:hover { transform: scale(1.08) rotate(0deg) !important; box-shadow: 0 12px 30px rgba(60, 40, 20, 0.2); z-index: 50 !important; }
+
+    .card-1 { top: 200px; left: 80px; transform: rotate(-3deg); z-index: 10; }
+    .card-2 { top: 190px; right: 100px; transform: rotate(2.5deg); z-index: 11; }
+    .card-3 { top: 460px; left: 370px; transform: rotate(-1.5deg); z-index: 12; }
+    .card-4 { top: 480px; left: 50px; transform: rotate(2deg); z-index: 13; }
+    .card-5 { top: 500px; left: 680px; transform: rotate(-2.5deg); z-index: 14; }
+    .card-6 { top: 510px; right: 70px; transform: rotate(1.8deg); z-index: 15; }
+
+    .photo-box { width: 230px; height: 180px; background: var(--parchment); overflow: hidden; display: flex; align-items: center; justify-content: center; }
+    .photo-box img { width: 100%; height: 100%; object-fit: cover; }
+    .caption { font-family: 'Caveat', cursive; font-size: 25px; color: var(--warm-brown); text-align: center; margin-top: 8px; line-height: 1.2; }
+
+    .tape { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); width: 60px; height: 18px; background: var(--tape-yellow); opacity: 0.7; border: 0.5px solid rgba(200, 170, 100, 0.4); z-index: 20; }
+    .tape.alt1 { left: 35%; }
+    .tape.alt2 { left: 65%; }
+
+    .sticker { position: absolute; font-size: 22px; z-index: 25; filter: drop-shadow(0 2px 3px rgba(0,0,0,0.15)); transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1); cursor: default; }
+    .sticker:hover { transform: scale(1.35) rotate(15deg); }
+    .sticker-1 { bottom: -12px; right: -10px; }
+    .sticker-2 { top: -12px; left: -8px; }
+    .sticker-3 { bottom: -10px; left: -8px; }
+    .sticker-4 { top: -12px; right: -6px; }
+    .sticker-5 { bottom: -12px; right: -10px; }
+    .sticker-6 { top: -10px; left: -7px; }
+
+    .doodle { position: absolute; z-index: 8; pointer-events: none; }
+    .doodle-heart { top: 730px; left: 200px; font-size: 80px; color: rgba(212, 144, 138, 0.3); transform: rotate(-15deg); }
+    .doodle-arrow { top: 420px; right: 280px; font-size: 40px; color: rgba(184, 169, 201, 0.4); transform: rotate(25deg); }
+    .doodle-sparkle { top: 240px; left: 420px; font-size: 28px; color: rgba(138, 171, 126, 0.35); }
+    .doodle-butterfly { top: 800px; right: 450px; font-size: 32px; color: rgba(138, 171, 126, 0.4); }
+
+    .firefly { position: absolute; font-size: 20px; opacity: 0.55; z-index: 7; pointer-events: none; animation: float 15s infinite ease-in-out; }
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); opacity: 0.4; }
+      25% { transform: translate(80px, -100px) rotate(10deg); opacity: 0.7; }
+      50% { transform: translate(-60px, -180px) rotate(-8deg); opacity: 0.5; }
+      75% { transform: translate(100px, -140px) rotate(12deg); opacity: 0.8; }
+    }
+    .ff1  { top: 120px; left: 200px;  animation-delay: 0s;   animation-duration: 18s; font-size: 18px; }
+    .ff2  { top: 150px; left: 1100px; animation-delay: 2s;   animation-duration: 22s; font-size: 16px; }
+    .ff3  { top: 300px; left: 480px;  animation-delay: 4s;   animation-duration: 20s; font-size: 20px; }
+    .ff4  { top: 320px; left: 920px;  animation-delay: 1s;   animation-duration: 19s; font-size: 17px; }
+    .ff5  { top: 450px; left: 340px;  animation-delay: 6s;   animation-duration: 21s; font-size: 19px; }
+    .ff6  { top: 530px; left: 1280px; animation-delay: 3s;   animation-duration: 17s; font-size: 18px; }
+    .ff7  { top: 680px; left: 160px;  animation-delay: 5s;   animation-duration: 23s; font-size: 16px; }
+    .ff8  { top: 660px; left: 760px;  animation-delay: 7s;   animation-duration: 18s; font-size: 20px; }
+    .ff9  { top: 700px; left: 1050px; animation-delay: 2s;   animation-duration: 20s; font-size: 17px; }
+    .ff10 { top: 830px; left: 400px;  animation-delay: 9s;   animation-duration: 24s; font-size: 18px; }
+    .ff11 { top: 850px; left: 950px;  animation-delay: 4s;   animation-duration: 19s; font-size: 16px; }
+    .ff12 { top: 950px; left: 130px;  animation-delay: 1s;   animation-duration: 22s; font-size: 20px; }
+    .ff13 { top: 980px; left: 650px;  animation-delay: 8s;   animation-duration: 16s; font-size: 17px; }
+    .ff14 { top: 960px; left: 1300px; animation-delay: 3s;   animation-duration: 21s; font-size: 18px; }
+    .ff15 { top: 200px; left: 700px;  animation-delay: 10s;  animation-duration: 25s; font-size: 16px; }
+    .ff16 { top: 400px; left: 1350px; animation-delay: 6s;   animation-duration: 18s; font-size: 19px; }
+    .ff17 { top: 560px; left: 580px;  animation-delay: 11s;  animation-duration: 20s; font-size: 16px; }
+    .ff18 { top: 780px; left: 1180px; animation-delay: 5s;   animation-duration: 22s; font-size: 18px; }
+
+    .timer-box {
+      position: absolute;
+      top: 220px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 320px;
+      background: rgba(250, 246, 238, 0.9);
+      border: 1px solid rgba(180, 150, 120, 0.4);
+      border-radius: 14px;
+      padding: 14px 20px 12px;
+      text-align: center;
+      z-index: 9;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.07);
+    }
+    .timer-label { font-family: 'Lora', serif; font-style: italic; font-size: 13px; color: var(--sage); letter-spacing: 1px; margin-bottom: 6px; }
+    .timer-infinity { font-size: 20px; color: var(--sage); margin-bottom: 4px; line-height: 1; }
+    .timer-row { display: flex; justify-content: center; align-items: flex-end; gap: 6px; flex-wrap: wrap; }
+    .timer-unit { display: flex; flex-direction: column; align-items: center; }
+    .timer-number { font-family: 'Caveat', cursive; font-size: 30px; font-weight: 600; color: var(--dusty-rose); line-height: 1; }
+    .timer-unit-label { font-family: 'Lora', serif; font-style: italic; font-size: 10px; color: var(--warm-brown); letter-spacing: 0.5px; margin-top: 1px; }
+    .timer-sep { font-family: 'Caveat', cursive; font-size: 24px; color: var(--sage); padding-bottom: 4px; }
+
+    /* SPOTIFY — 600px wide, taller, pushed up away from footnote */
+    .spotify-container {
+      position: absolute;
+      bottom: 130px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      background: white;
+      border: 1px solid rgba(200, 185, 160, 0.5);
+      border-radius: 16px;
+      padding: 10px 14px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.09);
+      z-index: 6;
+    }
+    .spotify-tape { position: absolute; top: -10px; right: 60px; width: 55px; height: 18px; background: var(--tape-yellow); opacity: 0.7; border: 0.5px solid rgba(200,170,100,0.4); }
+    .spotify-container iframe { border-radius: 10px; width: 100%; height: 152px; border: none; display: block; }
+
+    /* BOTTOM NOTE */
+    .bottom-box {
+      position: absolute;
+      bottom: 25px;
+      left: 50%;
+      transform: translateX(-50%) rotate(0.8deg);
+      width: 900px;
+      background: rgba(255, 220, 230, 0.4);
+      border: 0.5px solid rgba(200, 150, 160, 0.5);
+      border-radius: 8px;
+      padding: 14px 25px;
+      z-index: 5;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+    }
+    .bottom-tape { position: absolute; top: -10px; left: 30px; width: 55px; height: 18px; background: var(--tape-yellow); opacity: 0.7; border: 0.5px solid rgba(200, 170, 100, 0.4); }
+    .bottom-text { font-family: 'Lora', serif; font-style: italic; font-size: 15px; color: var(--ink); text-align: center; line-height: 1.6; }
+
+    .popup-overlay { position: fixed; inset: 0; background: rgba(61, 43, 31, 0.4); display: none; align-items: center; justify-content: center; z-index: 999; backdrop-filter: blur(3px); }
+    .popup-overlay.active { display: flex; animation: fadeIn 0.3s ease; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    .popup-card { background: var(--cream); border: 1px solid rgba(180, 150, 100, 0.5); padding: 35px 40px; max-width: 420px; width: 90%; position: relative; transform: rotate(-1deg); animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); box-shadow: 0 15px 50px rgba(0,0,0,0.25); }
+    @keyframes popIn { from { transform: scale(0.6) rotate(-5deg); opacity: 0; } to { transform: scale(1) rotate(-1deg); opacity: 1; } }
+    .popup-tape { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); width: 70px; height: 20px; background: var(--tape-yellow); opacity: 0.75; border: 0.5px solid rgba(200, 170, 100, 0.4); }
+    .popup-label { font-family: 'Caveat', cursive; font-size: 14px; letter-spacing: 2.5px; text-transform: uppercase; margin-bottom: 12px; }
+    .popup-label.fact { color: var(--sage); }
+    .popup-label.love { color: var(--dusty-rose); }
+    .popup-message { font-family: 'Lora', serif; font-style: italic; font-size: 16px; line-height: 1.8; color: var(--ink); }
+    .popup-close { position: absolute; top: 12px; right: 16px; background: none; border: none; cursor: pointer; font-family: 'Caveat', cursive; font-size: 26px; color: var(--warm-brown); line-height: 1; padding: 0; transition: all 0.2s ease; }
+    .popup-close:hover { color: var(--dusty-rose); transform: rotate(90deg); }
+
+    @media (max-width: 1500px) { body { overflow: auto; } .canvas { transform: scale(0.95); transform-origin: top center; } }
+    @media (max-width: 1400px) { .canvas { transform: scale(0.85); } }
+    @media (max-width: 1200px) { .canvas { transform: scale(0.7); } }
+  
+  @media (max-width: 1200px) { .canvas { transform: scale(0.7); } }
+  /* =====================================================
+   MOBILE VERSION (DO NOT REPLACE ANYTHING ABOVE)
+   ===================================================== */
+@media (max-width:768px){
+
+  body{
+    padding:0;
+    display:block;
+  }
+
+  /* turn poster into normal page */
+  .canvas{
+    width:100%;
+    height:auto;
+    transform:none !important;
+    padding:20px 15px 40px;
+  }
+
+  /* remove floating decorations for phone */
+  .firefly,
+  .doodle,
+  .corner-deco{
+    display:none;
+  }
+
+  /* header becomes normal block */
+  .header{
+    position:relative;
+    top:auto;
+    left:auto;
+    transform:none;
+    width:100%;
+    margin-bottom:20px;
+  }
+
+  .title{ font-size:36px; }
+  .subtitle{ font-size:12px; }
+
+  /* timer becomes full width card */
+  .timer-box{
+    position:relative;
+    top:auto;
+    left:auto;
+    transform:none;
+    width:100%;
+    margin:20px 0;
+  }
+
+  /* stack polaroids vertically */
+  .polaroid-card{
+    position:relative;
+    top:auto !important;
+    left:auto !important;
+    right:auto !important;
+    transform:none !important;
+    width:100%;
+    max-width:320px;
+    margin:18px auto;
+  }
+
+  .photo-box{
+    width:100%;
+    height:220px;
+  }
+
+  .card-1,.card-2,.card-3,.card-4,.card-5,.card-6{
+    top:auto; left:auto; right:auto;
+  }
+
+  /* spotify full width */
+  .spotify-container{
+    position:relative;
+    bottom:auto;
+    left:auto;
+    transform:none;
+    width:100%;
+    margin:30px 0;
+  }
+
+  /* bottom note full width */
+  .bottom-box{
+    position:relative;
+    bottom:auto;
+    left:auto;
+    transform:none;
+    width:100%;
+    margin-top:20px;
+  }
+
+}
+</style>
+</head>
+<body>
+  <div class="canvas">
+    <div class="bg-texture"></div>
+    <div class="corner-deco tl">🌿</div>
+    <div class="corner-deco tr">🌸</div>
+    <div class="corner-deco bl">🍄</div>
+    <div class="corner-deco br">🌾</div>
+
+    <div class="header">
+      <div class="subtitle">A LITTLE SOMETHING FOR</div>
+      <div class="title">Happy Birthday,<br>Vrinda!</div>
+      <div class="title-sub">made with wildflowers & warm memories</div>
+    </div>
+
+    <div class="doodle doodle-heart">💕</div>
+    <div class="doodle doodle-arrow">↗</div>
+    <div class="doodle doodle-sparkle">✨</div>
+    <div class="doodle doodle-butterfly">🦋</div>
+
+    <div class="firefly ff1">🌸</div>
+    <div class="firefly ff2">✨</div>
+    <div class="firefly ff3">🦋</div>
+    <div class="firefly ff4">🌿</div>
+    <div class="firefly ff5">💕</div>
+    <div class="firefly ff6">🌼</div>
+    <div class="firefly ff7">✨</div>
+    <div class="firefly ff8">🦋</div>
+    <div class="firefly ff9">🌸</div>
+    <div class="firefly ff10">🍀</div>
+    <div class="firefly ff11">💫</div>
+    <div class="firefly ff12">🌿</div>
+    <div class="firefly ff13">🌸</div>
+    <div class="firefly ff14">✨</div>
+    <div class="firefly ff15">🦋</div>
+    <div class="firefly ff16">🌾</div>
+    <div class="firefly ff17">💕</div>
+    <div class="firefly ff18">🌼</div>
+
+    <div class="timer-box">
+      <div class="timer-label">together since</div>
+      <div class="timer-infinity">∞</div>
+      <div class="timer-row">
+        <div class="timer-unit"><span class="timer-number" id="days">0</span><span class="timer-unit-label">days</span></div>
+        <div class="timer-sep">:</div>
+        <div class="timer-unit"><span class="timer-number" id="hours">0</span><span class="timer-unit-label">hours</span></div>
+        <div class="timer-sep">:</div>
+        <div class="timer-unit"><span class="timer-number" id="mins">0</span><span class="timer-unit-label">mins</span></div>
+        <div class="timer-sep">:</div>
+        <div class="timer-unit"><span class="timer-number" id="secs">0</span><span class="timer-unit-label">secs</span></div>
+      </div>
+    </div>
+
+    <div class="polaroid-card card-1" data-index="0">
+      <div class="tape"></div>
+      <div class="photo-box"><img src="img_1.jpeg" alt="Vrinda"></div>
+      <div class="caption">sunshine in human form</div>
+      <div class="sticker sticker-1">🌼</div>
+    </div>
+
+    <div class="polaroid-card card-2" data-index="1">
+      <div class="tape alt1"></div>
+      <div class="photo-box"><img src="img_7.jpeg" alt="Vrinda"></div>
+      <div class="caption">cheers to the best Head Girl :P</div>
+      <div class="sticker sticker-2">🦋</div>
+    </div>
+
+    <div class="polaroid-card card-3" data-index="2">
+      <div class="tape"></div>
+      <div class="photo-box"><img src="img_5.jpeg" alt="Vrinda"></div>
+      <div class="caption">My favourite human 💙</div>
+      <div class="sticker sticker-3">🌿</div>
+    </div>
+
+    <div class="polaroid-card card-4" data-index="3">
+      <div class="tape alt2"></div>
+      <div class="photo-box"><img src="img_6.jpeg" alt="Vrinda"></div>
+      <div class="caption">forever my safe place 🏡</div>
+      <div class="sticker sticker-4">🍀</div>
+    </div>
+
+    <div class="polaroid-card card-5" data-index="4">
+      <div class="tape"></div>
+      <div class="photo-box"><img src="img_2.jpeg" alt="Vrinda"></div>
+      <div class="caption">stardust & honey 🌾</div>
+      <div class="sticker sticker-5">🌸</div>
+    </div>
+
+    <div class="polaroid-card card-6" data-index="5">
+      <div class="tape alt1"></div>
+      <div class="photo-box"><img src="img_3.jpeg" alt="Vrinda"></div>
+      <div class="caption">chaos coordinator ✨</div>
+      <div class="sticker sticker-6">✨</div>
+    </div>
+
+    <!-- Spotify — 600px, taller, clear of footnote -->
+    <div class="spotify-container">
+      <div class="spotify-tape"></div>
+      <iframe
+        src="https://open.spotify.com/embed/playlist/1WAP2pqVThJ8wAsKbITrK2?utm_source=generator"
+        allowfullscreen=""
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+        loading="lazy">
+      </iframe>
+    </div>
+
+    <div class="bottom-box">
+      <div class="bottom-tape"></div>
+      <div class="bottom-text">
+        this whole little corner of the internet exists just for you! Hover around, click on things, & know that every pixel was placed with love 🌿
+      </div>
+    </div>
+  </div>
+
+  <div class="popup-overlay" id="popup">
+    <div class="popup-card">
+      <div class="popup-tape"></div>
+      <button class="popup-close" id="closeBtn">✕</button>
+      <div class="popup-label" id="popupLabel">fun fact</div>
+      <div class="popup-message" id="popupMessage"></div>
+    </div>
+  </div>
+
+  <script>
+    const messages = [
+      { type: 'fact', text: 'Biggest night owl, yet magically gets ready before the world in the morning! 🦉' },
+      { type: 'fact', text: 'Rajma-chawal fanatic! (And yes, don\'t forget the chole-bhature) 🍛' },
+      { type: 'fact', text: 'No matter what, skincare is mandatory!! 🤭' },
+      { type: 'fact', text: 'Always lost between the pages of fictional worlds 📖' },
+      { type: 'love', text: 'I miss you so much it hurts! Wish you were here by my side 🥲' },
+      { type: 'love', text: 'Forever my human diary - Thank you for being my teacher, my friend, my mentor, my love ♡ Praying to all the forces of nature to bless you with happiness for eternity. 🍂🎐' },
+    ];
+
+    const cards = document.querySelectorAll('.polaroid-card');
+    const popup = document.getElementById('popup');
+    const popupMessage = document.getElementById('popupMessage');
+    const popupLabel = document.getElementById('popupLabel');
+    const closeBtn = document.getElementById('closeBtn');
+
+    cards.forEach((card, i) => {
+      card.addEventListener('click', () => {
+        const msg = messages[i];
+        popupLabel.textContent = msg.type === 'fact' ? '✦ fun fact' : '♡ a love note';
+        popupLabel.className = 'popup-label ' + msg.type;
+        popupMessage.textContent = msg.text;
+        popup.classList.add('active');
+      });
+    });
+
+    popup.addEventListener('click', (e) => { if (e.target === popup) popup.classList.remove('active'); });
+    closeBtn.addEventListener('click', () => popup.classList.remove('active'));
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') popup.classList.remove('active'); });
+
+    const startDate = new Date('2021-06-01T00:00:00');
+    function updateTimer() {
+      const diff = new Date() - startDate;
+      document.getElementById('days').textContent  = Math.floor(diff / 86400000);
+      document.getElementById('hours').textContent = Math.floor((diff % 86400000) / 3600000);
+      document.getElementById('mins').textContent  = Math.floor((diff % 3600000) / 60000);
+      document.getElementById('secs').textContent  = Math.floor((diff % 60000) / 1000);
+    }
+    updateTimer();
+    setInterval(updateTimer, 1000);
+  </script>
+</body>
+</html>
