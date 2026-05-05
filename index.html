@@ -433,45 +433,53 @@
   </div>
 
   <script>
-    const messages = [
-      { type: 'fact', text: 'Biggest night owl, yet magically gets ready before the world in the morning! 🦉' },
-      { type: 'fact', text: 'Rajma-chawal fanatic! (And yes, don\'t forget the chole-bhature) 🍛' },
-      { type: 'love', text: 'I miss you so much it hurts! Wish you were here by my side :)' },
-      { type: 'love', text: 'Forever my human diary - Thank you for being my teacher, my friend, my mentor, my love ♡ Praying to all the forces of nature to bless you with happiness for eternity. 🍂🎐' },
-      { type: 'fact', text: 'No matter what, skincare is mandatory! hehe 🤭' },
-      { type: 'fact', text: 'Always lost between the pages of fictional paradise 📖 -- Craves chocolates like it's the end of the world 🍦' },
-    ];
+  const messages = [
+    { type: 'fact', text: 'Biggest night owl, yet magically gets ready before the world in the morning! 🦉' },
+    { type: 'fact', text: 'Rajma-chawal fanatic! (And yes, don\'t forget the chole-bhature) 🍛' },
+    { type: 'love', text: 'I miss you so much it hurts! Wish you were here by my side :)' },
+    { type: 'love', text: 'Forever my human diary - Thank you for being my teacher, my friend, my mentor, my love ♡ Praying to all the forces of nature to bless you with happiness for eternity. 🍂🎐' },
+    { type: 'fact', text: 'No matter what, skincare is mandatory! hehe 🤭' },
+    { type: 'fact', text: 'Always lost between the pages of fictional paradise 📖 -- Craves chocolates like it\'s the end of the world 🍦' },
+  ];
 
-    const cards = document.querySelectorAll('.polaroid-card');
-    const popup = document.getElementById('popup');
-    const popupMessage = document.getElementById('popupMessage');
-    const popupLabel = document.getElementById('popupLabel');
-    const closeBtn = document.getElementById('closeBtn');
+  const cards = document.querySelectorAll('.polaroid-card');
+  const popup = document.getElementById('popup');
+  const popupMessage = document.getElementById('popupMessage');
+  const popupLabel = document.getElementById('popupLabel');
+  const closeBtn = document.getElementById('closeBtn');
 
-    cards.forEach((card, i) => {
-      card.addEventListener('click', () => {
-        const msg = messages[i];
-        popupLabel.textContent = msg.type === 'fact' ? '✦ fun fact' : '♡ a love note';
-        popupLabel.className = 'popup-label ' + msg.type;
-        popupMessage.textContent = msg.text;
-        popup.classList.add('active');
-      });
+  cards.forEach((card, i) => {
+    card.addEventListener('click', () => {
+      const msg = messages[i];
+      popupLabel.textContent = msg.type === 'fact' ? '✦ fun fact' : '♡ a love note';
+      popupLabel.className = 'popup-label ' + msg.type;
+      popupMessage.textContent = msg.text;
+      popup.classList.add('active');
     });
+  });
 
-    popup.addEventListener('click', (e) => { if (e.target === popup) popup.classList.remove('active'); });
-    closeBtn.addEventListener('click', () => popup.classList.remove('active'));
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') popup.classList.remove('active'); });
+  popup.addEventListener('click', (e) => {
+    if (e.target === popup) popup.classList.remove('active');
+  });
 
-    const startDate = new Date('2021-06-01T00:00:00');
-    function updateTimer() {
-      const diff = new Date() - startDate;
-      document.getElementById('days').textContent  = Math.floor(diff / 86400000);
-      document.getElementById('hours').textContent = Math.floor((diff % 86400000) / 3600000);
-      document.getElementById('mins').textContent  = Math.floor((diff % 3600000) / 60000);
-      document.getElementById('secs').textContent  = Math.floor((diff % 60000) / 1000);
-    }
-    updateTimer();
-    setInterval(updateTimer, 1000);
-  </script>
+  closeBtn.addEventListener('click', () => popup.classList.remove('active'));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') popup.classList.remove('active');
+  });
+
+  const startDate = new Date('2021-06-01T00:00:00');
+
+  function updateTimer() {
+    const diff = new Date() - startDate;
+    document.getElementById('days').textContent  = Math.floor(diff / 86400000);
+    document.getElementById('hours').textContent = Math.floor((diff % 86400000) / 3600000);
+    document.getElementById('mins').textContent  = Math.floor((diff % 3600000) / 60000);
+    document.getElementById('secs').textContent  = Math.floor((diff % 60000) / 1000);
+  }
+
+  updateTimer();
+  setInterval(updateTimer, 1000);
+</script>
+
 </body>
 </html>
