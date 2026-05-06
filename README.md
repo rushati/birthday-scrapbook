@@ -39,17 +39,9 @@ Open `index.html` in your browser.
 
 This project is deployed using **GitHub Pages**.
 
-To deploy a similar project:
-
-1. Push your files to a GitHub repository
-2. Navigate to **Settings → Pages**
-3. Select the `main` branch as the source
-4. GitHub will generate a public URL in the format:
-
 ```
 https://<username>.github.io/<repository-name>/
 ```
-
 
 ## Purpose
 
